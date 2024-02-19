@@ -11,7 +11,7 @@ public class UserEntity : BaseEntity<int>
     public string Username { get; set; }
     public string Password { get; set; }
     public string Email { get; set; }
-    public EUserRole Role { get; set; }
+    public string Role { get; set; }
 
 
     // relationships

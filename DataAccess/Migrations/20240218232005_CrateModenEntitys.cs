@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Enum;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -20,7 +21,7 @@ namespace DataAccess.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(16)", nullable: false, defaultValue: nameof(EUserRole.CUSTOMER)),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: DateTime.Now),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "datetime2", nullable: true)

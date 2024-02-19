@@ -1,33 +1,48 @@
 ﻿using Business.Interfaces;
+using Business.Request;
+using Core.Enum;
+using Core.Exceptions;
 using Entity.Models.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Mapster;
 
 namespace Business.Services;
 
 public class AdminService : IAdminService
 {
-    public bool CreateAdmin(UserEntity entity)
+    private readonly IUserService _userService;
+    public AdminService(IUserService userService)
     {
-        throw new NotImplementedException();
+        _userService = userService;
+    }
+    public bool CreateAdmin(CreateUserRequest request)
+    {
+        var entity = request.Adapt<UserEntity>();
+        entity.Role = nameof(EUserRole.ADMIN);
+        _userService.CreateUser(entity);
+        return true;
     }
 
     public bool DeleteAdmin(int id)
     {
-        throw new NotImplementedException();
+        var adminUser = _userService.Get().Where(x => x.Id == id && x.Role == nameof(EUserRole.ADMIN));
+        if (adminUser == null) throw new BaseException("NotFound");
+        _userService.DeleteUser(id);
+        return true;
     }
 
     public ICollection<UserEntity> GetAdmins()
     {
-        throw new NotImplementedException();
+        return _userService.Get().Where(x => x.Role == nameof(EUserRole.ADMIN)).ToList();
     }
 
-    public bool UpdateAdmin(UserEntity entity)
+    public bool UpdateAdmin(int id, UpdateUserRequest request)
     {
-        throw new NotImplementedException();
+        var adminUser = _userService.Get().Where(x => x.Id == id && x.Role == nameof(EUserRole.ADMIN)).FirstOrDefault();
+        if (adminUser == null) throw new BaseException("NotFound");
+        adminUser.Email = request.Email;
+        adminUser.Username = request.Username;
+        _userService.UpdateUser(adminUser);
+        return true;
     }
 }
 

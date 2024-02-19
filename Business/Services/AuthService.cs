@@ -37,9 +37,8 @@ namespace Business.Services
         }
         public string Login(AuthLoginRequest request, EUserRole role)
         {
-            var user = _userRepository.Get().Where(x => x.Username == request.Username).FirstOrDefault();
+            var user = _userRepository.Get().Where(x => x.Username == request.Username && x.Role == nameof(role)).FirstOrDefault();
             if (user == null) throw new Exception("User not found");
-            if (user.Role != role) throw new Exception("User not found");
             if (!_cryptoService.Verify(request.Password, user.Password)) throw new Exception("Password is wrong");
 
             return _tokenService.GenerateToken(new List<Claim>() {

@@ -1,5 +1,14 @@
+using Business.Interfaces;
+using Business.Repositories.Abstract;
+using Business.Repositories.Concrete;
+using Business.Services;
+using Core.Interfaces;
+using Core.Services;
+using DataAccess.Context;
+using DataAccess.Seeders;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
@@ -9,8 +18,25 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
+// add services 
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+// add repositories
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+// add crypto service
+builder.Services.AddScoped<ICryptoService, CryptoService>();
+
+// configurasyon kullanï¿½labilir tekrar eden kodlarï¿½ kaldï¿½rï¿½r
+builder.Services.AddDbContext<MainDbContext>(options =>
+    options.UseSqlServer("Data Source=localhost; Initial Catalog=TicketApp; Integrated Security=True; Connect Timeout=30; Encrypt=False; Trust Server Certificate=False; Application Intent=ReadWrite; Multi Subnet Failover=False"));
+
 
 builder.Services
     .AddSwaggerGen(c =>
@@ -23,28 +49,53 @@ builder.Services
         Contact = new OpenApiContact()
         {
             Email = "zaferaligunbey@gmail.com",
-            Name = "zafer ali günbey",
+            Name = "zafer ali gï¿½nbey",
             Url = new Uri("https://www.xxx.com")
         }
     });
+    c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+    {
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Needs valid JWT Token",
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+
 })
     .AddEndpointsApiExplorer()
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Secret_Key!.41")),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("W@tPZ%EHSuzN%Jo#H>Kku^PkQ[eXW:]wZKj}FLo/mS~!<PXM1wCeOtArr<<X`}(")),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+AdminSeeder.Seed(app);  //Uygulama geliï¿½tirme aï¿½amasï¿½nda ï¿½aï¿½ï¿½rï¿½yoruz. 
 
 app.UseHttpsRedirection();
 

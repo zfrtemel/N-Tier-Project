@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Ticket
 {
-    [Route("admin/ticket"), Authorize(Roles = nameof(EUserRole.Admin))]
+    [Route("admin/ticket"), Authorize(Roles = nameof(EUserRole.ADMIN))]
     public class AdminTicketController : APIControllerBase
     {
         private readonly ITicketService _ticketService;

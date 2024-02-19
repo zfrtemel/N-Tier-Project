@@ -1,4 +1,5 @@
-﻿using Core.Web.Abstracts.Auth;
+﻿using Core.Enum;
+using Core.Web.Abstracts.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Business.Interfaces
 {
     public interface IAuthService
     {
-        public string Login(IAuthLoginRequest request);
+        public string Login(AuthLoginRequest request,EUserRole role);
     }
 }

@@ -1,6 +1,6 @@
-﻿using Business.Interfaces;
+﻿using Core.Interfaces;
 
-namespace Business.Services;
+namespace Core.Services;
 public class CryptoService : ICryptoService
 {
     public string Hash(string str)

@@ -23,7 +23,7 @@ public class TokenService : ITokenService
             claims: claims,
             expires: DateTime.UtcNow.AddDays(7),
             signingCredentials: new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Secret_Key!.41")), SecurityAlgorithms.HmacSha256Signature
+                new SymmetricSecurityKey(Encoding.ASCII.GetBytes("W@tPZ%EHSuzN%Jo#H>Kku^PkQ[eXW:]wZKj}FLo/mS~!<PXM1wCeOtArr<<X`}(")), SecurityAlgorithms.HmacSha256Signature
             )
         );
 

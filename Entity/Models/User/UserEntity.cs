@@ -1,18 +1,19 @@
 ﻿using Core.Abstracts;
 using Core.Enum;
 using Entity.Models.Ticket;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Entity.Models.User
+namespace Entity.Models.User;
+
+[Table("users")]
+public class UserEntity : BaseEntity<int>
 {
-    public class UserEntity : BaseEntity<int>
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public EUserRole Role { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public string Email { get; set; }
+    public EUserRole Role { get; set; }
 
 
-        // relationships
-        public virtual ICollection<TicketEntity> Tickets { get; set; }
-    }
+    // relationships
+    public virtual ICollection<TicketEntity> Tickets { get; set; }
 }

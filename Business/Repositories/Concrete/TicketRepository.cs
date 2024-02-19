@@ -1,4 +1,5 @@
 ﻿using Business.Repositories.Abstract;
+using DataAccess.Context;
 using DataAccess.Implements;
 using Entity.Models.Ticket;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace Business.Repositories.Concrete;
 public class TicketRepository : Repository<TicketEntity>, ITicketRepository
 {
-    public TicketRepository(DbContext dbContext) : base(dbContext)
+    public TicketRepository(MainDbContext dbContext) : base(dbContext)
     {
     }
 }

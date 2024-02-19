@@ -1,9 +1,11 @@
 ﻿using Core.Abstracts;
 using Core.Web.Enum;
 using Entity.Models.User;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Models.Ticket
 {
+    [Table("tickets")]
     public class TicketEntity : BaseEntity<int>
     {
         public string Title { get; set; }

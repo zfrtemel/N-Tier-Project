@@ -16,10 +16,10 @@ namespace API.Controllers.Ticket
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] TicketEntity ticket)
+        public IActionResult Post([FromBody] CreateTicketRequest request)
         {
-            _ticketService.CreateTicket(ticket);
-            return ApiResult("Ticket created", true, true);
+
+            return ApiResult("ticketCreated", true, _ticketService.CreateTicket(request));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Abstracts;
+using Core.Web.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,8 +13,8 @@ namespace Entity.Models.Ticket
     public class TicketOperationLogEntity : BaseEntity<int>
     {
         public int TicketId { get; set; }
-        public string OperationUserId { get; set; }
-        public string OperationStatus { get; set; }
+        public int OperationUserId { get; set; }
+        public ETicketStatus OperationStatus { get; set; }
 
         // relationships
         public virtual TicketEntity Ticket { get; set; }

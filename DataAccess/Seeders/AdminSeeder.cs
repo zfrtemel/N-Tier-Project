@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Core.Interfaces;
+using Core.Enum;
 
 namespace DataAccess.Seeders
 {
@@ -23,8 +24,8 @@ namespace DataAccess.Seeders
                 {
                     Email = "admin@test.com",
                     Username = "admin",
-                    Role = Core.Enum.EUserRole.ADMIN,
-                    Password = crypto.Hash("123456789Aa."),
+                    Role = nameof(EUserRole.ADMIN),
+                    Password = crypto.Hash("123456"),
                     CreatedAt = System.DateTime.Now,
                 });
             }

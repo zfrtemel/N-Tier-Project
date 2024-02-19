@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20240218232005_CrateModenEntitys")]
-    partial class CrateModenEntitys
+    [Migration("20240219081320_CreateTable")]
+    partial class CreateTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("tickets");
                 });
 
             modelBuilder.Entity("Entity.Models.Ticket.TicketOperationLogEntity", b =>
@@ -89,13 +89,11 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("deleted_at");
 
-                    b.Property<string>("OperationStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OperationStatus")
+                        .HasColumnType("int");
 
-                    b.Property<string>("OperationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("OperationUserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
@@ -108,7 +106,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("TicketId");
 
-                    b.ToTable("TicketOperationLogs");
+                    b.ToTable("ticket_operation_logs");
                 });
 
             modelBuilder.Entity("Entity.Models.User.UserEntity", b =>
@@ -137,8 +135,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2")
@@ -150,7 +149,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("users");
                 });
 
             modelBuilder.Entity("Entity.Models.Ticket.TicketEntity", b =>

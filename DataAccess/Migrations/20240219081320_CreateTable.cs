@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.Enum;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -7,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class CrateModenEntitys : Migration
+    public partial class CreateTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +20,7 @@ namespace DataAccess.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(16)", nullable: false, defaultValue: nameof(EUserRole.CUSTOMER)),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: DateTime.Now),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -63,8 +62,8 @@ namespace DataAccess.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TicketId = table.Column<int>(type: "int", nullable: false),
-                    OperationUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OperationStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OperationUserId = table.Column<int>(type: "int", nullable: false),
+                    OperationStatus = table.Column<int>(type: "int", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: DateTime.Now),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "datetime2", nullable: true)
